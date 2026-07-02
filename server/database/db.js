@@ -7,7 +7,7 @@ dotenv.config();
 
 
 export async function dbConnection() {
-    const connection = await mysql.createConnection({
+    const connection = await mysql2.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
