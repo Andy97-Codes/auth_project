@@ -1,4 +1,5 @@
 import { dbConnection } from '../database/db.js';
+import bcrypt from 'bcrypt';
 
 
 
@@ -20,3 +21,34 @@ export async function createNewUser(newUser) {
         throw new Error('Could not create user');
     }
 }
+
+
+
+export async function checkUser(checkUserLogin) {
+    try {
+         
+        const connection = await dbConnection();
+
+        const [users] = await connection.execute('SELECT * FROM user WHERE userName = ?', 
+            [checkUserLogin.userName]
+        );
+
+        const user = users[0];
+
+        if(!user) {
+            throw new Error('Wrong username or password')
+        }
+
+        const match = await bcrypt.compare(checkUserLogin.userPassword, user.userPassword);
+
+        if(!match) {
+            throw new Error('Wrong username or password');
+        }
+
+        connection.end();
+
+    } catch (err) {
+        throw new Error('wrong username or password');
+    }
+}
+

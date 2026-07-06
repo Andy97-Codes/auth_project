@@ -14,6 +14,7 @@
     "vite": "^8.0.12"
   },
   "dependencies": {
-    "svelte-sonner": "^1.1.1"
+    "svelte-sonner": "^1.1.1",
+    "svelte-spa-router": "^5.1.1"
   }
 }
