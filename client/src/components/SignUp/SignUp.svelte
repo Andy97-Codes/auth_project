@@ -1,9 +1,10 @@
 <script>
 import { Toaster, toast } from "svelte-sonner";
+import {push, pop, replace} from 'svelte-spa-router';
 
 let userName = '';
 let userPassword = '';
-async function createUser() {
+async function createUser () {
     const res = await fetch('http://localhost:8080/api/user', {
         method: 'POST',
         headers: {
@@ -18,7 +19,7 @@ async function createUser() {
         toast.success(data.message);
         userName = '';
         userPassword = '';
-        //include the spa-router that direct the user to Login.svelte
+        push('/');
     } else {
         toast.error(data.message);
     }
@@ -41,6 +42,8 @@ async function createUser() {
     </form>
 </main>
 
+<h2>Already have an account? Go to login here!</h2>
+<button type="button" on:click={() => push('/')}>Log in</button>
 
 <style>
 
